@@ -1,0 +1,179 @@
+.search-box {
+  padding-top: 32px;
+  padding-right: 32px;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-input-group
+  > .ant-input:first-child {
+  border-radius: 2px;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button {
+  border-start-end-radius: 2px;
+  border-end-end-radius: 2px;
+}
+
+.enrolled-courses {
+  margin-bottom: 32px;
+}
+
+.all-courses {
+  background: var(--neutral-4, #f0f0f0);
+  padding-bottom: 32px;
+}
+
+.view-exam-header {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 32px;
+}
+
+.arrow-icon > .anticon svg {
+  width: 26px;
+  height: 20px;
+  margin-right: 16px;
+  color: black;
+  align-self: center;
+}
+
+.exam-header {
+  margin: 32px 0px 0px 113px;
+  align-self: center;
+}
+
+.exam-header > h3 {
+  color: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; 
+}
+
+.exam-header > p {
+  color: var(--character-secondary-45, rgba(0, 0, 0, 0.45));
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  margin: 0;
+  padding: 0;
+}
+
+.countdown-clock {
+  align-self: center;
+  margin-top: 32px;
+  padding: 12px 24px;
+  margin-right: 112px;
+}
+
+.question-answer-form {
+  margin: 0px 113px 32px 113px;
+}
+
+.submit-btn {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.exam-submit-btn {
+  width: 120px;
+  height: 40px;
+}
+
+.forward-btn {
+  margin-top: 32px;
+  align-self: center;
+  margin-right: 112px;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-alert {
+  border-radius: 2px;
+}
+
+.alert-message {
+  margin: 32px 0px;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-alert .ant-alert-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-alert-with-description {
+  padding: 9px 112px 9px 112px;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-alert-with-description
+  .ant-alert-description {
+  align-self: center;
+  color: var(--character-primary-85, rgba(0, 0, 0, 0.85));
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; 
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-alert-with-description .ant-alert-message {
+  margin-bottom: 0;
+}
+
+.forward-btn-size {
+  width: 120px;
+  height: 40px;
+}
+
+.icon > .css-i4bv87-MuiSvgIcon-root {
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.answer-true > .css-i4bv87-MuiSvgIcon-root {
+  color: #52C41A;
+}
+
+.answer-false > .css-i4bv87-MuiSvgIcon-root {
+  color: #ff4d4f;
+}
+
+.title {
+  display: flex;
+  margin-top: 32px;
+}
+
+.exam-name-group {
+  align-self: center;
+}
+
+.exam-header-arrow-icon {
+  margin: 0px 0px 0px 113px;
+  align-self: center;
+}
+
+/* Change Password Form */
+.change-password-form {
+  padding-top: 32px;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-form {
+  margin: auto;
+}
+/* 
+.pwd-form .ant-form .ant-form-vertical :where(.css-dev-only-do-not-override-2i2tap) {
+  margin: auto;
+} */
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-input-affix-wrapper {
+  min-width: 400px;
+  border-radius: 2px;
+}
+
+.change-password-submit-btn {
+  min-width: 400px;
+}
