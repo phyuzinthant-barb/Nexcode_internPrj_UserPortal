@@ -4,7 +4,7 @@ import "../styles/styles.css";
 const App = () => {
   return (
     <div className="all-courses-body">
-        <Row gutter={16}>
+        <Row gutter={24}>
           <Col xs={24} sm={12} md={8} lg={8} xl={8}>
             <Card className="new-course-card" title="Course Name " bordered={false}>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea omnis

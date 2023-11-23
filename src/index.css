@@ -9,7 +9,7 @@ body {
 
 .top-level {
   display: flex;
-  /* padding-right: 32px; */
+  margin: 32px 113px 30px 113px;
   justify-content: space-between;
 }
 
@@ -17,8 +17,10 @@ body {
   font-weight: 500;
   font-size: 24px;
   line-height: 32px;
-  margin: 32px 0px 0px 113px;
+  /* margin: 32px 0px 0px 113px; */
   font-family: "Inter", sans-serif;
   display: flex;
   color: #0050B3;
+  margin: 0;
+  padding: 0;
 }

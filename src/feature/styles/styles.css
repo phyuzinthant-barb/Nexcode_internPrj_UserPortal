@@ -1,8 +1,3 @@
-.search-box {
-  padding-top: 32px;
-  padding-right: 32px;
-}
-
 :where(.css-dev-only-do-not-override-2i2tap).ant-input-group
   > .ant-input:first-child {
   border-radius: 2px;
@@ -25,6 +20,10 @@
   padding-bottom: 32px;
 }
 
+.all-courses > .top-level > .header {
+  margin-top: 32px;
+}
+
 .view-exam-header {
   display: flex;
   justify-content: space-between;
@@ -39,7 +38,7 @@
   align-self: center;
 }
 
-.exam-header {
+.view-exam-header > .exam-header {
   margin: 32px 0px 0px 113px;
   align-self: center;
 }
@@ -50,7 +49,9 @@
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
-  line-height: 28px; 
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
 }
 
 .exam-header > p {
@@ -66,9 +67,6 @@
 
 .countdown-clock {
   align-self: center;
-  margin-top: 32px;
-  padding: 12px 24px;
-  margin-right: 112px;
 }
 
 .question-answer-form {
@@ -86,9 +84,7 @@
 }
 
 .forward-btn {
-  margin-top: 32px;
   align-self: center;
-  margin-right: 112px;
 }
 
 :where(.css-dev-only-do-not-override-2i2tap).ant-alert {
@@ -116,10 +112,11 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 28px; 
+  line-height: 28px;
 }
 
-:where(.css-dev-only-do-not-override-2i2tap).ant-alert-with-description .ant-alert-message {
+:where(.css-dev-only-do-not-override-2i2tap).ant-alert-with-description
+  .ant-alert-message {
   margin-bottom: 0;
 }
 
@@ -135,7 +132,7 @@
 }
 
 .answer-true > .css-i4bv87-MuiSvgIcon-root {
-  color: #52C41A;
+  color: #52c41a;
 }
 
 .answer-false > .css-i4bv87-MuiSvgIcon-root {
@@ -176,4 +173,35 @@
 
 .change-password-submit-btn {
   min-width: 400px;
+}
+
+.exam-header {
+  color: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 140% */
+}
+
+.exam-name-group > p {
+  color: var(--character-secondary-45, rgba(0, 0, 0, 0.45));
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.exam-name-group > h3 {
+  padding: 0;
+  margin: 0;
+  color: var(--character-title-85, rgba(0, 0, 0, 0.85));
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px;
 }
