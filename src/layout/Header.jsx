@@ -1,21 +1,52 @@
-import { Layout, Dropdown, Space, Avatar, Menu } from "antd";
+import { Layout, Dropdown, Space, Avatar, Menu, Modal } from "antd";
 import {
   EditOutlined,
   LogoutOutlined,
   UserOutlined,
   DownOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import "./styles/styles.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { logoutAccount } from "../feature/auth/authSlice";
 
 const { Header } = Layout;
 
 const App = () => {
   const navigate = useNavigate();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  const LogoutModalForm = ({ visible, handleOk, handleCancel }) => (
+    <Modal
+      title="Are you sure to logout?"
+      open={visible}
+      onOk={handleOk}
+      okType="danger"
+      centered
+      onCancel={handleCancel}></Modal>
+  );
+
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
   const handleClick = (obj) => {
     navigate(obj.key);
   };
+
+  const handleLogoutModalClose = () => {
+    dispatch(logoutAccount());
+    navigate("/sign-in");
+  };
+
+  const handleLogoutModalCancel = () => {
+    setLogoutModalVisible(false);
+  }
+
+  // const toggleMenu = () => {
+  //   setMenuVisible(!menuVisible);
+  // };
 
   const items = [
     {
@@ -28,7 +59,7 @@ const App = () => {
     },
     {
       label: (
-        <a>
+        <a onClick={() => setLogoutModalVisible(true)}>
           <LogoutOutlined /> Log out
         </a>
       ),
@@ -48,8 +79,11 @@ const App = () => {
           <span className="n">n</span>
           <span className="ee">e</span>
         </h2>
-        <div className="navbar-display">
-          <div className="nav-item">
+        <div className="navbar-display lg:flex">
+          <div className="lg:hidden">
+            {/* <MenuOutlined onClick={toggleMenu} /> */}
+          </div>
+          <div className={`nav-item lg:flex ${menuVisible ? "block" : "hidden"}`}>
             <Menu
               theme="dark"
               mode="horizontal"
@@ -85,6 +119,11 @@ const App = () => {
           </Dropdown>
         </div>
       </Header>
+      <LogoutModalForm
+        visible={logoutModalVisible}
+        handleOk={handleLogoutModalClose}
+        handleCancel={handleLogoutModalCancel}
+      />
     </Layout>
   );
 };
