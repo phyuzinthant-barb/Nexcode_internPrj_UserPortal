@@ -1,30 +1,44 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { ChangePasswordForm } from "../../feature";
-import { Alert } from "antd";
+import { Alert, message } from "antd";
 import { useState } from "react";
+import { useChangePasswordMutation } from "../../feature/user/userApi";
+import { useSelector } from "react-redux";
 
 const ChangePassword = () => {
   const navigate = useNavigate();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [currentNewPasswordSame, setCurrentNewPasswordSame] = useState(true);
+  const token = useSelector((state) => state.authSlice.token);
+  const [ changePassword, {error: error} ] = useChangePasswordMutation(token);
 
-  const handleFormSubmission = (values) => {
+  const handleFormSubmission = async (values) => {
+    setPasswordsMatch(true);
+    setCurrentNewPasswordSame(true);
+
     if (values["new-password"] !== values["confirm-password"]) {
       setPasswordsMatch(false);
-      setCurrentNewPasswordSame(true); 
-      return; 
+      return;
     }
 
     if (values["current-password"] === values["new-password"]) {
       setCurrentNewPasswordSame(false);
-      setPasswordsMatch(true); 
-      return; 
+      return;
     }
-    setPasswordsMatch(true);
-    setCurrentNewPasswordSame(true);
-    console.log("Success:", values);
-    navigate("/");
+
+    try {
+      await changePassword({
+        password: {
+          oldPassword: values["current-password"],
+          newPassword: values["new-password"],
+        },
+      });
+      message.success("Password changed successfully.")
+      navigate("/sign-in");
+    } catch (error) {
+      console.error("Error changing password:", error);
+    }
   };
 
   return (
@@ -52,6 +66,15 @@ const ChangePassword = () => {
       {!currentNewPasswordSame && (
         <Alert
           message="Current password and new password cannot be the same."
+          type="error"
+          showIcon
+          style={{ marginTop: 16 }}
+        />
+      )}
+
+      {error && (
+        <Alert
+          message="Error changing password. Please try again."
           type="error"
           showIcon
           style={{ marginTop: 16 }}

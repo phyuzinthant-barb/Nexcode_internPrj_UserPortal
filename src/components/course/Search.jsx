@@ -1,13 +1,19 @@
 import { Input } from "antd";
+import { useState } from "react";
 
 const { Search } = Input;
 
-const onSearch = (value, _e, info) => console.log(info?.source, value);
+const SearchCourses = ({ onSearch }) => {
+  const [searchValue, setSearchValue] = useState("");
 
-const App = () => {
+  const handleSearch = (value, _e, info) => {
+    console.log(info?.source, value);
+    setSearchValue(value);
+    onSearch(value);
+  };
   return (
-    <Search placeholder="input search text" onSearch={onSearch} enterButton />
+    <Search placeholder="input search courses" onSearch={onSearch} enterButton allowClear style={{minWidth:"200px"}}/>
   );
 };
 
-export default App;
+export default SearchCourses;

@@ -1,20 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Alert } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { TakenQuestion } from "../../components";
+import { useSelector } from "react-redux";
+import { useGetViewAnswerSheetQuery } from "../../feature/history/historyApi";
 import "../styles/styles.css";
 
 const HistoryRecord = () => {
-  const [marks, setMarks] = useState(50);
+  const { examId } = useParams();
+  const token = useSelector((state) => state.authSlice.token);
+  const { data: record, isLoading, error, refetch } = useGetViewAnswerSheetQuery({ examId, token });
+
+  console.log(record)
+
+  const [marks, setMarks] = useState(record?.obtainedResult);
+
+  useEffect(()=> {
+    refetch();
+  }, [refetch, token]);
 
   const renderAlert = () => {
-    if (marks >= 50) {
+    if (record?.isPassFail === true) {
       return (
         <Alert
           showIcon
           message="Congratulations! You Passed!"
-          description={`${marks} Marks`}
+          description={`${record?.obtainedResult} Marks`}
           type="success"
         />
       );
@@ -23,13 +35,13 @@ const HistoryRecord = () => {
         <Alert
           showIcon
           message="You Failed!"
-          description={`${marks} Marks`}
+          description={`${record?.obtainedResult} Marks`}
           type="error"
         />
       );
     }
-  };
-
+  }
+  
   return (
     <div>
       <div className="title">
@@ -39,13 +51,15 @@ const HistoryRecord = () => {
           </Link>
         </div>
         <div className="exam-name-group">
-          <h3>Exam Name</h3>
-          <p>Exam Description</p>
+          <h3>{record?.examResponse?.name}</h3>
+          <p>{record?.examResponse?.description}</p>
         </div>
       </div>
       <div className="alert-message">{renderAlert()}</div>
       <div className="question-answer-form">
-        <TakenQuestion />
+        {record?.userAnswerResponse.map((questionResponse) => (
+          <TakenQuestion key={questionResponse.id} questionResponse={questionResponse} />
+        ))}
       </div>
     </div>
   );

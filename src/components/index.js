@@ -1,5 +1,5 @@
 //Course components
-export { default as Search } from "./course/Search";
+export { default as SearchCourses } from "./course/Search";
 export { default as CustomProgress } from "./course/Progress";
 export { default as EnrolledCourseCard } from "./course/EnrolledCourseCard";
 export { default as NewCourseCard } from "./course/NewCourseCard";

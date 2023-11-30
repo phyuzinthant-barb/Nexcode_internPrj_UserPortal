@@ -1,14 +1,28 @@
-import { Button, Form, Input } from "antd";
-import "../pageStyle/styles.css";
+import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { useForgotPasswordMutation } from "../../feature/auth/authApi";
+import { useLocation } from "react-router-dom";
+import "../pageStyle/styles.css";
 
 const App = () => {
   const navigate = useNavigate();
+  const currentRoute = useLocation().pathname;
+  const [forgotPasswordMutation, {isLoading: Loading}] = useForgotPasswordMutation();
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    navigate("/sign-in/forgot-password/verify-otp");
+  const onFinish = async (values) => {
+    try {
+      await forgotPasswordMutation(values);
+      message.success('Verification code sent successfully!');
+      navigate('/sign-in/forgot-password/verify-otp', {
+        replace: true,
+        state: {email: values.email, previousRoute: currentRoute},
+    });
+    } catch (error) {
+      console.error('Forgot password error:', error);
+      message.error('Failed to send verification code. Please try again.');
+    }
   };
+
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -41,7 +55,6 @@ const App = () => {
           name="email"
           rules={[
             {
-              required: true,
               type: "email",
               message: "Please input your email!",
             },
@@ -60,6 +73,7 @@ const App = () => {
                   className="sign-in-submit-btn"
                   type="primary"
                   htmlType="submit"
+                  loading= {Loading}
                   disabled={isButtonDisabled}>
                   Get Code
                 </Button>

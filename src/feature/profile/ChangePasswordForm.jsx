@@ -37,6 +37,7 @@ const App = ({ onSubmit }) => {
               required: true,
               message: "Please input the current password!",
             },
+            
           ]}
         >
           <Input.Password />
@@ -50,6 +51,12 @@ const App = ({ onSubmit }) => {
               required: true,
               message: "Please input the new password!",
             },
+            {
+              pattern:
+                  /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                  "Your password must have minimum eight characters with at least one uppercase letter, one number and one special character.",
+          },
           ]}
         >
           <Input.Password />
@@ -63,6 +70,12 @@ const App = ({ onSubmit }) => {
               required: true,
               message: "Please input the confirm password!",
             },
+            {
+              pattern:
+                  /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                  "Your password must have minimum eight characters with at least one uppercase letter, one number and one special character.",
+          },
           ]}>
           <Input.Password />
         </Form.Item>

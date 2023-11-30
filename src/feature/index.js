@@ -11,3 +11,6 @@ export { default as HistoryRecord } from "./history/HistoryRecord";
 
 //Profile feature
 export { default as ChangePasswordForm } from "./profile/ChangePasswordForm";
+
+//auth feature
+export { default as AuthRequire } from "./auth/AuthRequire";

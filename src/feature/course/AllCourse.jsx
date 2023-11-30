@@ -9,8 +9,6 @@ const AllCourse = () => {
       </div>
       <div>
         <NewCourseCard />
-        <NewCourseCard />
-        <NewCourseCard />
       </div>
     </div>
   );

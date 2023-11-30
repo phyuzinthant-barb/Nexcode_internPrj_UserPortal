@@ -24,3 +24,16 @@ body {
   margin: 0;
   padding: 0;
 }
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-modal .ant-modal-content {
+  border-radius: initial;
+}
+
+.ant-input-search :where(.css-dev-only-do-not-override-2i2tap).ant-input-group .ant-input-affix-wrapper:not(:last-child) {
+  border-radius: 2px !important;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-input-affix-wrapper {
+  width: 200px !important;
+  min-width: initial;
+}

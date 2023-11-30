@@ -1,24 +1,29 @@
-import { useState } from "react";
 import { Button, Alert } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../styles/styles.css";
 import { TakenQuestion } from "../../components";
+import { useSelector } from "react-redux";
 
 const ExamRecord = () => {
   const navigate = useNavigate();
-  const [marks, setMarks] = useState(50); 
+  const token = useSelector((state) => state.authSlice.token);
+
+  const location = useLocation();
+  const responseData = location?.state;
+
+  // console.log(responseData?)
 
   const handleNextExam = () => {
-    navigate("/view-exam")
+    navigate("/");
   };
 
   const renderAlert = () => {
-    if (marks >= 50) {
+    if (responseData?.isPassFail === true) {
       return (
         <Alert
           showIcon
           message="Congratulations! You Passed!"
-          description={`${marks} Marks`}
+          description={`${responseData?.obtainedResult} Marks`}
           type="success"
         />
       );
@@ -27,7 +32,7 @@ const ExamRecord = () => {
         <Alert
           showIcon
           message="You Failed!"
-          description={`${marks} Marks`}
+          description={`${responseData?.obtainedResult} Marks`}
           type="error"
         />
       );
@@ -38,18 +43,23 @@ const ExamRecord = () => {
     <div>
       <div className="top-level">
         <div className="exam-header">
-          <h3>Exam Name</h3>
-          <p>Exam Description</p>
+          <h3>{responseData?.examResponse?.name}</h3>
+          <p>{responseData?.examResponse?.description}</p>
         </div>
         <div className="forward-btn">
-          <Button className="forward-btn-size" type="primary" onClick={handleNextExam}>
+          <Button
+            className="forward-btn-size"
+            type="primary"
+            onClick={handleNextExam}>
             Next Exam
           </Button>
         </div>
       </div>
       <div className="alert-message">{renderAlert()}</div>
       <div className="question-answer-form">
-        <TakenQuestion />
+        {responseData?.userAnswerResponse?.map((question, index) => (
+          <TakenQuestion key={index} questionResponse={question} />
+        ))}
       </div>
     </div>
   );
