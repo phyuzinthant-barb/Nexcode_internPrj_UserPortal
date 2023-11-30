@@ -1,5 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  ArrowLeftOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import { ChangePasswordForm } from "../../feature";
 import { Alert, message } from "antd";
 import { useState } from "react";
@@ -7,11 +10,16 @@ import { useChangePasswordMutation } from "../../feature/user/userApi";
 import { useSelector } from "react-redux";
 
 const ChangePassword = () => {
+  const location = useLocation();
+  const isFirstTime = location?.state;
+
+  console.log(isFirstTime);
+
   const navigate = useNavigate();
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [currentNewPasswordSame, setCurrentNewPasswordSame] = useState(true);
   const token = useSelector((state) => state.authSlice.token);
-  const [ changePassword, {error: error} ] = useChangePasswordMutation(token);
+  const [changePassword, { error: error }] = useChangePasswordMutation(token);
 
   const handleFormSubmission = async (values) => {
     setPasswordsMatch(true);
@@ -34,7 +42,7 @@ const ChangePassword = () => {
           newPassword: values["new-password"],
         },
       });
-      message.success("Password changed successfully.")
+      message.success("Password changed successfully.");
       navigate("/sign-in");
     } catch (error) {
       console.error("Error changing password:", error);
@@ -43,16 +51,40 @@ const ChangePassword = () => {
 
   return (
     <div>
-      <div className="title">
-        <div className="exam-header-arrow-icon">
-          <Link to="/" className="arrow-icon">
-            <ArrowLeftOutlined />
-          </Link>
+      {isFirstTime?.isFirstTime ? (
+        <div className="title">
+          <div className="exam-header-arrow-icon">
+            <div className="exam-header-arrow-icon"></div>
+            <Link to="/" className="arrow-icon">
+              <ArrowLeftOutlined />
+              <div className="exam-name-group">
+                <h3>Change Password</h3>
+              </div>
+            </Link>
+          </div>
         </div>
-        <div className="exam-name-group">
-          <h3>Change Password</h3>
+      ) : (
+        <div>
+          <Alert
+            showIcon
+            message="Change your temporary password."
+            type="warning"
+            style={{ width: "100%", paddingLeft: "113px", height:"46px" }}
+          />
+          <div
+            className="first-time-login"
+            style={{
+              fontWeight: "500",
+              fontSize: "20px",
+              lineHeight: "28px",
+              fontStyle: "normal",
+              marginTop: "24px",
+              marginLeft: "113px",
+            }}>
+            <p>Change Password</p>
+          </div>
         </div>
-      </div>
+      )}
 
       {!passwordsMatch && (
         <Alert

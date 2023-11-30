@@ -12,7 +12,9 @@ const SearchCourses = ({ onSearch }) => {
     onSearch(value);
   };
   return (
-    <Search placeholder="input search courses" onSearch={onSearch} enterButton allowClear style={{minWidth:"200px"}}/>
+    <div className="search-input" >
+    <Search placeholder="input search courses" onSearch={onSearch} enterButton allowClear/>
+    </div>
   );
 };
 

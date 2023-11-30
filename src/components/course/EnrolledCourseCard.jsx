@@ -4,10 +4,11 @@ import "../styles/styles.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGetSignUpCoursesQuery } from "../../feature/user/userApi";
+import { useEffect } from "react";
 
 const App = () => {
   const token = useSelector((state) => state.authSlice.token);
-  const { data: signUpCourses, isLoading, error } = useGetSignUpCoursesQuery(token);
+  const { data: signUpCourses, isLoading, error, refetch } = useGetSignUpCoursesQuery(token);
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -32,7 +32,7 @@ const ExamHistoryCard = () => {
               </div>
             </Col>
             <Col xs={24} md={8}>
-              <div className="detail">
+              <div className="detail-history">
                 <div className="information">
                   <div className="detail-header">
                     <p>Exam Type</p>

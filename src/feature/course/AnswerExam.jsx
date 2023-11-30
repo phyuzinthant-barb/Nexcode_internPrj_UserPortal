@@ -1,5 +1,5 @@
-import { Statistic, Button, Form } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { Statistic, Button, Form, Spin } from "antd";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Question } from "../../components";
 import "../styles/styles.css";
 import { useSelector } from "react-redux";
@@ -12,57 +12,28 @@ const { Countdown } = Statistic;
 
 const AnswerExam = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const examDuration = location?.state * 60
+
   const { examId } = useParams();
   const token = useSelector((state) => state.authSlice.token);
-  const { data: questions, isLoading, error, refetch } = useGetStartExamQuery({ examId, token });
-  const [submitExam, { isLoading: Loading }] = useSubmitExamMutation(token);
+  const { data: questions, isLoading : isQuestionsLoading, error, refetch } = useGetStartExamQuery({ examId, token });
+  const [submitExam] = useSubmitExamMutation(token);
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [selectedAnswers, setSelectedAnswers] = useState([]);
 
-  const data = questions?.exam.examDurationMinute;
-  const hours = Math.floor(data / 60);
-  const minutes = data % 60;
-
-  const formatTime = `${hours}:${minutes}`;
-
-  const format = "HH:mm";
-  const [remainingTime, setRemainingTime] = useState(dayjs(formatTime, format).minute() * 60);
+  const [remainingTime, setRemainingTime] = useState(examDuration);
 
 
   useEffect(() => {
-    const savedTime = Cookies.get("remainingTime");
-
+    const savedTime = Cookies.get("remainingTime") || null;
     if (savedTime) {
     setRemainingTime(
       savedTime/1000
     );
     }
   }, []);
-
-  useEffect(() => {
-    Cookies.set("selectedAnswers", JSON.stringify(selectedAnswers));
-  }, [selectedAnswers]);
-
-  // const autoSubmit = async () => {
-  //   try {
-  //     const response = await submitExam({
-  //       examId,
-  //       answerData: Object.keys(selectedAnswers).map((questionId) => ({
-  //         questionId,
-  //         selectedAnswer: selectedAnswers[questionId],
-  //       })),
-  //     });
-  
-  //     if (response.error) {
-  //       console.error("Error submitting exam:", response.error);
-  //     } else {
-  //       console.log("Auto-submitting the exam!", response);
-  //       navigate("/view-record");
-  //     }
-  //   } catch (error) {
-  //     console.error("Unexpected error submitting exam:", error);
-  //   }
-  // };
 
   const onFinish = async(values) => {
 
@@ -72,20 +43,24 @@ const AnswerExam = () => {
         selectedAnswer : item[1]?.answer
       }
     })
+
     try {
-      const response = await submitExam({
+      setIsSubmitting(true)
+      const {data, error} = await submitExam({
         examId,
         answerData
       });
-      if (response.error) {
-        console.error("Error submitting exam:", response.error);
-      } else {
-        console.log("Auto-submitting the exam!", response);
+      if (data) {
+        console.log("Auto-submitting the exam!", data?.message );
         Cookies.remove("remainingTime")
-        navigate(`/answer-exam/${examId}/view-record`, {state : response?.data});
+        navigate(`/answer-exam/${examId}/view-record`, {state : data});
+      } else {
+        console.error("Error submitting exam:", error?.data?.message || error?.error);
       }
     } catch (error) {
       console.error("Unexpected error submitting exam:", error);
+    }finally{
+      setIsSubmitting(false)
     }
   };
 
@@ -98,16 +73,22 @@ const AnswerExam = () => {
     Cookies.set("remainingTime", value)
   }
 
+  if(isQuestionsLoading){
+    return <div>
+      <p> Loading . . .  </p>
+    </div>
+  }
+
   return (
     <div>
       <Form onFinish={onFinish}> 
       <div className="top-level">
         <div className="exam-header">
-          <h3>Exam Name</h3>
-          <p>Exam Description</p>
+          <h3>{questions?.exam.name}</h3>
+          <p>{questions?.exam.description}</p>
         </div>
         <div className="countdown-clock">
-          <Countdown value={Date.now() + remainingTime * 1000} onFinish={onFinish} onChange={onCDChange} />
+          <Countdown value={Date.now() + remainingTime * 1000}  onChange={onCDChange} />
         </div>
       </div>
       <div className="question-answer-form">
@@ -126,7 +107,7 @@ const AnswerExam = () => {
           <p>Loading...</p>
         )}
         <div className="submit-btn">
-          <Button type="primary" htmlType="submit" className="exam-submit-btn" loading={Loading}>
+          <Button type="primary" htmlType="submit" className="exam-submit-btn" loading={isSubmitting}>
             Submit
           </Button>
         </div>

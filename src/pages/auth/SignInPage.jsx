@@ -20,9 +20,16 @@ const App = () => {
       const { data, error } = await loginAccount(values);
       console.log(data)
         console.log( 'error', error)
-      if (data && data.token) {
-        dispatch(setCredentials({ email : values?.email , accessToken: data.token }));
-        navigate("/");
+      if (data?.token) {
+        dispatch(setCredentials({...data}));
+
+        const isFirstTime = data?.firstPasswordChangeCompleted
+
+        if(isFirstTime){
+        return navigate("/");
+        }else{
+          return navigate("/change-password", {state : {isFirstTime : data?.firstPasswordChangeCompleted }})
+        }
       } else if (error) {
         if (error.originalStatus === 404) {
           message.error("Email is incorrect.");
