@@ -4,12 +4,17 @@ import "../styles/styles.css";
 import { ExamCard } from "../../components";
 import { useSelector } from "react-redux";
 import { useGetSignUpCoursesQuery } from "../user/userApi";
+import { useEffect } from "react";
 
 const ViewExam = () => {
   const { courseId } = useParams();
   const token = useSelector((state) => state.authSlice.token);
-  const { data: signUpCourses, isLoading, error } = useGetSignUpCoursesQuery(token);
+  const { data: signUpCourses, isLoading, error, refetch } = useGetSignUpCoursesQuery(token);
   const currentCourse = signUpCourses?.find(course => course.id === parseInt(courseId));
+
+  useEffect(()=> {
+    refetch();
+  },[])
 
   return (
     <div>

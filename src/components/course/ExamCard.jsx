@@ -14,21 +14,22 @@ const ExamCard = () => {
     error,
   } = useGetAllExamsByCourseIdQuery({ courseId, token });
 
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  const okClick = (examId) => {
-    navigate(`/answer-exam/${examId}`);
+  const okClick = (examId, examDuration) => {
+    navigate(`/answer-exam/${examId}`, {state : examDuration});
   };
 
-  const handleClick = (examId) => {
+  const handleClick = (examId, examDuration) => {
     Modal.confirm({
       title: "Are you sure?",
       content: "You are ready to start the exam.",
       okText: "Start Exam",
       centered: true,
-      onOk: () => okClick(examId),
+      onOk: () => okClick(examId, examDuration),
       footer: (_, { OkBtn, CancelBtn }) => (
         <>
           <CancelBtn />
@@ -67,7 +68,7 @@ const ExamCard = () => {
                 </div>
                 <div className="view-exam-history">
                   <Space size="middle">
-                    <Button type="primary" onClick={() => handleClick(exam.id)}>
+                    <Button type="primary" onClick={() => handleClick(exam.id, exam.examDurationMinute)}>
                       Start Exam
                     </Button>
                   </Space>

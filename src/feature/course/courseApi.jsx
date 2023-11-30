@@ -9,7 +9,7 @@ export const courseApi = baseApi.injectEndpoints({
         url: `${endPoint}`,
         method: "GET",
       }),
-      invalidatesTags: ["course"],
+      providesTags: ["course"],
     }),
 
     getAllExamsByCourseId: builder.query({
@@ -17,7 +17,7 @@ export const courseApi = baseApi.injectEndpoints({
         url: `user/${endPoint}/${courseId}/exams`,
         method: "GET",
       }),
-      invalidatesTags: ["course"]
+      providesTags: ["course"]
     }),
 
     getSearchCourseByCourseId : builder.query ({
@@ -25,7 +25,7 @@ export const courseApi = baseApi.injectEndpoints({
         url: `user/${endPoint}?${courseId}`,
         method: "GET",
       }),
-      invalidatesTags: ["course"]
+      providesTags: ["course"]
     })
   }),
 });

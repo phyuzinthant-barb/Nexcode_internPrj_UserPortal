@@ -197,3 +197,12 @@
 :where(.css-dev-only-do-not-override-2i2tap).ant-radio-wrapper span.ant-radio+* {
   font-size: 16px;
 }
+
+.detail-history {
+  display: block;
+    width: 100%;
+}
+
+/* .search-box .search-input {
+  width: 200px;
+} */

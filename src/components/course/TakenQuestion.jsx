@@ -7,7 +7,6 @@ const TakenQuestion = ({ questionResponse }) => {
 
   const selectedAnswerIndex = qRes?.answers?.find(answer => answer.answer === selectedAnswer);
 
-
   return (
     <div className="answer-exam-form">
       <div className="question">

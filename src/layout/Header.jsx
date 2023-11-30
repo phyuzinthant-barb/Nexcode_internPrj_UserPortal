@@ -7,8 +7,8 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import "./styles/styles.css";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { logoutAccount } from "../feature/auth/authSlice";
 
@@ -16,8 +16,11 @@ const { Header } = Layout;
 
 const App = () => {
   const navigate = useNavigate();
-  const [menuVisible, setMenuVisible] = useState(false);
   const dispatch = useDispatch();
+  // console.log(username);
+
+  const {username} = useSelector(state => state.authSlice)
+  // const { isFirstTime } = useSelector(state => state.authSlice.isFirstTime)
 
   const LogoutModalForm = ({ visible, handleOk, handleCancel }) => (
     <Modal
@@ -80,10 +83,8 @@ const App = () => {
           <span className="ee">e</span>
         </h2>
         <div className="navbar-display lg:flex">
-          <div className="lg:hidden">
-            {/* <MenuOutlined onClick={toggleMenu} /> */}
-          </div>
-          <div className={`nav-item lg:flex ${menuVisible ? "block" : "hidden"}`}>
+          
+          <div>
             <Menu
               theme="dark"
               mode="horizontal"
@@ -112,7 +113,7 @@ const App = () => {
             <a onClick={(e) => e.preventDefault()}>
               <Space>
                 <Avatar icon={<UserOutlined />} />
-                Student Name
+                {username ||  "Student Name"}
                 <DownOutlined />
               </Space>
             </a>

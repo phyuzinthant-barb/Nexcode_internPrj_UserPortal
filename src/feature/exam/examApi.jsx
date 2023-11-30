@@ -18,7 +18,7 @@ export const examApi = baseApi.injectEndpoints({
         method: "POST",
         body: answerData,
       }),
-      invalidatesTags: ["exam"]
+      invalidatesTags: ["exam", "course"]
     })
   }),
 });

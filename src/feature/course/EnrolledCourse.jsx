@@ -1,5 +1,5 @@
 import { SearchCourses } from "../../components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/styles.css";
 import { useGetSignUpCoursesQuery } from "../user/userApi";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ const EnrolledCourse = () => {
   const [searchedCourseId, setSearchedCourseId] = useState(null);
 
   const token = useSelector((state) => state.authSlice.token);
-  const { data: signUpCourses, isLoading, error } = useGetSignUpCoursesQuery(token);
+  const { data: signUpCourses, isLoading, error, refetch } = useGetSignUpCoursesQuery(token);
 
   if (isLoading) {
     return <div>Loading...</div>; 
@@ -22,6 +22,11 @@ const EnrolledCourse = () => {
     console.error("Error fetching signup courses:", error);
     return <div>Error fetching courses</div>; 
   }
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch, token]);
+
 
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());

@@ -12,9 +12,9 @@ const HistoryRecord = () => {
   const token = useSelector((state) => state.authSlice.token);
   const { data: record, isLoading, error, refetch } = useGetViewAnswerSheetQuery({ examId, token });
 
-  console.log(record)
+  // const [marks, setMarks] = useState(record?.obtainedResult);
 
-  const [marks, setMarks] = useState(record?.obtainedResult);
+  console.log("exam record", record);
 
   useEffect(()=> {
     refetch();
