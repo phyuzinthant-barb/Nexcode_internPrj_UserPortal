@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Space, Button, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -17,7 +17,6 @@ const ExamHistoryCard = () => {
     return <div>Error fetching courses</div>;
   }
 
-  // console.log(history);
   return (
     <div>
       {history.map((exam) => (
@@ -44,10 +43,10 @@ const ExamHistoryCard = () => {
                   </div>
                   <div className="detail-info">
                     <p>-Multiple Choice</p>
-                    <p>{`-${exam.numberOfQuestionsToGenerate} Questions`}</p>
-                    <p>-50 mins</p>
-                    <p>{`-${exam.examTotalMark} Marks`}</p>
-                    <p>{`-${exam.obtainedResult} Marks`}</p>
+                    <p>- {`${exam.numberOfQuestionsToGenerate} Questions`}</p>
+                    <p>- {`${exam.examDurationMinute} Questions`}</p>
+                    <p>- {`${exam.examTotalMark} Marks`}</p>
+                    <p>- {`${exam.obtainedResult} Marks`}</p>
                     <p>{exam.isPass ? "Passed" : "Failed"}</p>
                   </div>
                 </div>

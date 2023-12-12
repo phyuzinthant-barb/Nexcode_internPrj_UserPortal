@@ -7,7 +7,7 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import "./styles/styles.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { logoutAccount } from "../feature/auth/authSlice";
@@ -17,10 +17,9 @@ const { Header } = Layout;
 const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log(username);
 
   const {username} = useSelector(state => state.authSlice)
-  // const { isFirstTime } = useSelector(state => state.authSlice.isFirstTime)
+  const {firstPasswordChangeCompleted} = useSelector(state => state.authSlice)
 
   const LogoutModalForm = ({ visible, handleOk, handleCancel }) => (
     <Modal
@@ -46,11 +45,7 @@ const App = () => {
   const handleLogoutModalCancel = () => {
     setLogoutModalVisible(false);
   }
-
-  // const toggleMenu = () => {
-  //   setMenuVisible(!menuVisible);
-  // };
-
+  
   const items = [
     {
       label: (
@@ -95,10 +90,12 @@ const App = () => {
                 {
                   key: "",
                   label: "Courses",
+                  disabled: !firstPasswordChangeCompleted,
                 },
                 {
                   key: "history",
                   label: "History",
+                  disabled: !firstPasswordChangeCompleted,
                 },
               ]}
             />

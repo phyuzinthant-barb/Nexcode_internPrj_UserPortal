@@ -161,10 +161,6 @@
 :where(.css-dev-only-do-not-override-2i2tap).ant-form {
   margin: auto;
 }
-/* 
-.pwd-form .ant-form .ant-form-vertical :where(.css-dev-only-do-not-override-2i2tap) {
-  margin: auto;
-} */
 
 :where(.css-dev-only-do-not-override-2i2tap).ant-input-affix-wrapper {
   min-width: 400px;

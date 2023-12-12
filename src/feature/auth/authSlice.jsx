@@ -9,19 +9,19 @@ const authSlice = createSlice({
   initialState: {
     email: null,
     token: initialToken,
-    username,
+    username
   },
   reducers: {
     setCredentials: (state, action) => {
       console.log('setCredentials Action:', action);
-      const { email, token, username, isFirstTime } = action.payload;
+      const { email, token, username, firstPasswordChangeCompleted } = action.payload;
       state.email = email;
       state.token = token;
       state.username = username;
-      state.isFirstTime = isFirstTime;
+      state.firstPasswordChangeCompleted = firstPasswordChangeCompleted;
       Cookies.set("token", token, { expires: 1 }); 
       Cookies.set("username", username);
-      Cookies.set("isFirstTime", isFirstTime);
+      Cookies.set("firstPasswordChangeCompleted", firstPasswordChangeCompleted);
     },
 
     logoutAccount: (state, action) => {
@@ -29,6 +29,7 @@ const authSlice = createSlice({
       state.token = null;
       Cookies.remove("token");
       Cookies.remove("username");
+      Cookies.remove("firstPasswordChangeCompleted");
     },
   },
 });

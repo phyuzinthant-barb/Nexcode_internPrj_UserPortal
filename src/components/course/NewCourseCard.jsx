@@ -6,7 +6,7 @@ import "../styles/styles.css";
 
 const App = () => {
   const token = useSelector((state) => state.authSlice.token);
-  const { data: courses, isLoading, error, refetch } = useGetAllCoursesQuery(token);
+  const { data: courses, error, refetch } = useGetAllCoursesQuery(token);
 
   useEffect(() => {
     refetch();

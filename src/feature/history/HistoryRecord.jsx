@@ -10,9 +10,7 @@ import "../styles/styles.css";
 const HistoryRecord = () => {
   const { examId } = useParams();
   const token = useSelector((state) => state.authSlice.token);
-  const { data: record, isLoading, error, refetch } = useGetViewAnswerSheetQuery({ examId, token });
-
-  // const [marks, setMarks] = useState(record?.obtainedResult);
+  const { data: record, refetch } = useGetViewAnswerSheetQuery({ examId, token });
 
   console.log("exam record", record);
 

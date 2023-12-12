@@ -60,7 +60,7 @@ const ExamCard = () => {
                     <p>Total Marks</p>
                   </div>
                   <div className="detail-info">
-                    <p>-Multiple Choice</p>
+                    <p>- Multiple Choice</p>
                     <p>- {exam.noOfQuestion} Questions</p>
                     <p>- {exam.examDurationMinute} Minutes</p>
                     <p>- {exam.examTotalMark} Marks</p>

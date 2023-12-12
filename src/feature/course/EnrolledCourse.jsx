@@ -23,11 +23,6 @@ const EnrolledCourse = () => {
     return <div>Error fetching courses</div>; 
   }
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [refetch, token]);
-
-
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());
     console.log(term);

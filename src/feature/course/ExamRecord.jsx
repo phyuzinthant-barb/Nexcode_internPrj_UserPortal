@@ -11,8 +11,6 @@ const ExamRecord = () => {
   const location = useLocation();
   const responseData = location?.state;
 
-  // console.log(responseData?)
-
   const handleNextExam = () => {
     navigate("/");
   };

@@ -1,4 +1,4 @@
-import { Statistic, Button, Form, Spin } from "antd";
+import { Statistic, Button, Form } from "antd";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Question } from "../../components";
 import "../styles/styles.css";
@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { useGetStartExamQuery, useSubmitExamMutation } from "../exam/examApi";
 import { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
-import dayjs from "dayjs";
 
 const { Countdown } = Statistic;
 
@@ -17,23 +16,23 @@ const AnswerExam = () => {
 
   const { examId } = useParams();
   const token = useSelector((state) => state.authSlice.token);
-  const { data: questions, isLoading : isQuestionsLoading, error, refetch } = useGetStartExamQuery({ examId, token });
+  const { data: questions, isLoading : isQuestionsLoading } = useGetStartExamQuery({ examId, token });
   const [submitExam] = useSubmitExamMutation(token);
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-
+  const [form] = Form.useForm()
   const [remainingTime, setRemainingTime] = useState(examDuration);
+
+  const savedTime = Cookies.get("remainingTime") || null;
 
 
   useEffect(() => {
-    const savedTime = Cookies.get("remainingTime") || null;
-    if (savedTime) {
-    setRemainingTime(
-      savedTime/1000
-    );
+    if(savedTime){
+      setRemainingTime(savedTime / 1000)
     }
-  }, []);
+  }, [savedTime])
+
 
   const onFinish = async(values) => {
 
@@ -64,6 +63,10 @@ const AnswerExam = () => {
     }
   };
 
+  const onAutoSubmit = () => {
+      form.submit();
+  }
+
   const onAnswerChange = (questionId, answer) => {
     const changedAnswers = selectedAnswers?.filter(item => item.questionId !== questionId)
     setSelectedAnswers([...changedAnswers, {questionId , answer}]);
@@ -71,6 +74,7 @@ const AnswerExam = () => {
 
   const onCDChange = (value) => {
     Cookies.set("remainingTime", value)
+  
   }
 
   if(isQuestionsLoading){
@@ -81,14 +85,14 @@ const AnswerExam = () => {
 
   return (
     <div>
-      <Form onFinish={onFinish}> 
+      <Form form={form} onFinish={onFinish}> 
       <div className="top-level">
         <div className="exam-header">
           <h3>{questions?.exam.name}</h3>
           <p>{questions?.exam.description}</p>
         </div>
         <div className="countdown-clock">
-          <Countdown value={Date.now() + remainingTime * 1000}  onChange={onCDChange} />
+          <Countdown value={Date.now() + remainingTime * 1000}  onChange={onCDChange} onFinish={onAutoSubmit} />
         </div>
       </div>
       <div className="question-answer-form">

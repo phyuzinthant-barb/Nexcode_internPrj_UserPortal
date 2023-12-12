@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowLeftOutlined,
-  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { ChangePasswordForm } from "../../feature";
 import { Alert, message } from "antd";
@@ -98,15 +97,6 @@ const ChangePassword = () => {
       {!currentNewPasswordSame && (
         <Alert
           message="Current password and new password cannot be the same."
-          type="error"
-          showIcon
-          style={{ marginTop: 16 }}
-        />
-      )}
-
-      {error && (
-        <Alert
-          message="Error changing password. Please try again."
           type="error"
           showIcon
           style={{ marginTop: 16 }}

@@ -9,7 +9,7 @@ export const historyApi = baseApi.injectEndpoints({
         url: `user/exam/${endPoint}`,
         method: "GET",
       }),
-      invalidatesTags: ["history"],
+      providesTags: ["history"],
     }),
 
     getViewAnswerSheet: builder.query({
